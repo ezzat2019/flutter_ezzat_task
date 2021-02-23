@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  animated_text_kit:
+  email_validator:
   page_transition:
   country_code_picker:
   font_awesome_flutter:

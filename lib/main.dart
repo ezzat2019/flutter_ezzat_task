@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ezzat_task/screens/sign_in_screen.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
 
       ),
       home: SignInScreen(),
+      builder:  EasyLoading.init(),
     );
   }
 }
