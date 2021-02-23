@@ -54,20 +54,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 8,),
-                          FaIcon(FontAwesomeIcons.cloudSun,color: Colors.amber,size: 80,),
-                          SizedBox(height: 20,),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.cloudSun,
+                            color: Colors.amber,
+                            size: 80,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 100),
                             alignment: Alignment.center,
-
-                            child: Text(l[index].toString(),style: TextStyle(
-                              color:Colors.amber,
-                              fontSize: 20
-                            ),),
+                            child: Text(
+                              l[index].toString(),
+                              style:
+                                  TextStyle(color: Colors.amber, fontSize: 20),
+                            ),
                           ),
-                          SizedBox(height: 20,),
-
+                          SizedBox(
+                            height: 20,
+                          ),
                         ],
                       ),
                     ),

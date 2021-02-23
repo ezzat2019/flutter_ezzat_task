@@ -3,14 +3,13 @@ class LoginModel {
   String _password;
 
   String get username => _username;
+
   String get password => _password;
 
-  LoginModel({
-      String username, 
-      String password}){
+  LoginModel({String username, String password}) {
     _username = username;
     _password = password;
-}
+  }
 
   LoginModel.fromJson(dynamic json) {
     _username = json["username"];
@@ -23,5 +22,4 @@ class LoginModel {
     map["password"] = _password;
     return map;
   }
-
 }

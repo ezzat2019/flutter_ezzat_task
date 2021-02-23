@@ -1,22 +1,19 @@
-
-
 class RegisterMoadel {
   String _username;
   String _email;
   String _password;
 
   String get username => _username;
+
   String get email => _email;
+
   String get password => _password;
 
-  RegisterMoadel({
-      String username, 
-      String email, 
-      String password}){
+  RegisterMoadel({String username, String email, String password}) {
     _username = username;
     _email = email;
     _password = password;
-}
+  }
 
   RegisterMoadel.fromJson(dynamic json) {
     _username = json["username"];
@@ -31,5 +28,4 @@ class RegisterMoadel {
     map["password"] = _password;
     return map;
   }
-
 }

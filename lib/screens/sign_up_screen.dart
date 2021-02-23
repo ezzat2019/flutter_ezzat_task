@@ -15,11 +15,11 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   int radioValue = 1;
-  final name_controller=TextEditingController();
-  final phone_controller=TextEditingController();
-  final email_controller=TextEditingController();
-  final pass_controller=TextEditingController();
-  final pass_confirm_controller=TextEditingController();
+  final name_controller = TextEditingController();
+  final phone_controller = TextEditingController();
+  final email_controller = TextEditingController();
+  final pass_controller = TextEditingController();
+  final pass_confirm_controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             margin: EdgeInsets.only(right: 25, left: 30),
             child: TextField(
               controller: name_controller,
-
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.next,
               cursorColor: Colors.amber,
@@ -115,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Container(
             margin: EdgeInsets.only(right: 25, left: 30),
             child: TextField(
-controller: email_controller,
+              controller: email_controller,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               cursorColor: Colors.amber,
@@ -220,20 +219,19 @@ controller: email_controller,
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: RaisedButton(
               onPressed: () {
-                String userName=name_controller.text.trim();
-                if (userName.length<1) {
+                String userName = name_controller.text.trim();
+                if (userName.length < 1) {
                   LoadingHelper.showToast("enter you name!");
                   return;
-
                 }
-                String phone=phone_controller.text.trim();
-                if (phone.length<1) {
+                String phone = phone_controller.text.trim();
+                if (phone.length < 1) {
                   LoadingHelper.showToast("enter phone number!");
                   return;
                 }
 
-                String email=email_controller.text.trim();
-                if (email.length<1) {
+                String email = email_controller.text.trim();
+                if (email.length < 1) {
                   LoadingHelper.showToast("enter email!");
                   return;
                 }
@@ -243,58 +241,52 @@ controller: email_controller,
                   return;
                 }
 
-                String pass=pass_controller.text.trim();
-                if (pass.length<1) {
+                String pass = pass_controller.text.trim();
+                if (pass.length < 1) {
                   LoadingHelper.showToast("enter password!");
                   return;
                 }
-                String pass_confirm=pass_confirm_controller.text.trim();
-                if (pass_confirm.length<1) {
+                String pass_confirm = pass_confirm_controller.text.trim();
+                if (pass_confirm.length < 1) {
                   LoadingHelper.showToast("enter confirm  password!");
                   return;
                 }
-                if (pass_confirm!=pass) {
-                  LoadingHelper.showToast("password not the same of confirm password");
+                if (pass_confirm != pass) {
+                  LoadingHelper.showToast(
+                      "password not the same of confirm password");
                   return;
                 }
 
-
-                final model=RegisterMoadel(username: phone,email: email,password: pass);
+                final model = RegisterMoadel(
+                    username: phone, email: email, password: pass);
 
                 LoadingHelper.showLoading();
                 Dio()
-                .post("http://multi-choice.org/api/Authenticate/register",data:model.toJson())
+                    .post("http://multi-choice.org/api/Authenticate/register",
+                        data: model.toJson())
                     .then((value) {
-                  if (value!=null) {
-                    if (value.statusCode==200) {
-
+                  if (value != null) {
+                    if (value.statusCode == 200) {
                       EasyLoading.showSuccess('Great Success!');
                       Navigator.of(context).pop();
                       print(value.data.toString());
                       LoadingHelper.closeLoading();
-                    }
-                    else
-                    {
+                    } else {
                       print(value.data.toString());
                       LoadingHelper.closeLoading();
 
-                      LoadingHelper.showToast("error status code is ${value.statusCode}");
-
+                      LoadingHelper.showToast(
+                          "error status code is ${value.statusCode}");
                     }
                   }
                   LoadingHelper.closeLoading();
-
-
-                })
-                .catchError((e){
+                }).catchError((e) {
                   LoadingHelper.closeLoading();
 
                   print(e.toString());
-                  LoadingHelper.showToast("${e.toString()}\nensure constraint of password \nTry again with  another email and user name");
+                  LoadingHelper.showToast(
+                      "${e.toString()}\nensure constraint of password \nTry again with  another email and user name");
                 });
-
-
-
               },
               child: Padding(
                 padding: const EdgeInsets.all(15),

@@ -21,20 +21,13 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final phone_controller=TextEditingController();
-  final pass_controller=TextEditingController();
+  final phone_controller = TextEditingController();
+  final pass_controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
-
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: ListView(
@@ -49,10 +42,8 @@ class _SignInScreenState extends State<SignInScreen> {
               textStyle: TextStyle(
                 fontSize: 50.0,
                 fontWeight: FontWeight.bold,
-
               ),
               boxHeight: 120,
-
             ),
           ),
           Row(
@@ -94,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 color: Colors.white.withOpacity(.5))),
                         hintText: "Your Mobile Number",
                         hintStyle:
-                        TextStyle(color: Colors.white.withOpacity(.5))),
+                            TextStyle(color: Colors.white.withOpacity(.5))),
                   ),
                 ),
               )
@@ -116,140 +107,158 @@ class _SignInScreenState extends State<SignInScreen> {
                       borderSide: BorderSide(color: Colors.amberAccent)),
                   enabledBorder: UnderlineInputBorder(
                       borderSide:
-                      BorderSide(color: Colors.white.withOpacity(.5))),
+                          BorderSide(color: Colors.white.withOpacity(.5))),
                   hintText: "Password",
                   hintStyle: TextStyle(color: Colors.white.withOpacity(.5))),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             alignment: Alignment.topLeft,
             margin: EdgeInsets.symmetric(horizontal: 15),
-            child: FlatButton(onPressed: () {
-              LoadingHelper.showToast("forget password coming soon!");
-
-
-            }, child: Text("Forget Password?", style: TextStyle(
-                fontSize: 20,
-                color: Colors.white
-            ),)),
+            child: FlatButton(
+                onPressed: () {
+                  LoadingHelper.showToast("forget password coming soon!");
+                },
+                child: Text(
+                  "Forget Password?",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                )),
           ),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
-            child: RaisedButton(onPressed: () {
-
-              String phone=phone_controller.text.trim();
-              if (phone.length<1) {
-                LoadingHelper.showToast("enter phone number!");
-                return;
-              }
-
-              String pass=pass_controller.text.trim();
-              if (pass.length<1) {
-                LoadingHelper.showToast("enter password!");
-                return;
-              }
-
-              final model=LoginModel(username: phone,password: pass);
-
-              LoadingHelper.showLoading();
-              Dio()
-                  .post("http://multi-choice.org/api/Authenticate/login",data:model.toJson())
-                  .then((value) {
-                if (value!=null) {
-                  if (value.statusCode==200) {
-
-                    LoginRespose res=LoginRespose.fromJson(value.data);
-                    EasyLoading.showSuccess('Great Success!');
-
-                    print(res.data.token);
-                    LoadingHelper.closeLoading();
-                    Navigator.of(context)
-                    .pushReplacement(PageTransition(type: PageTransitionType.leftToRight,
-                        child: WeatherScreen(res),
-                        duration: Duration(milliseconds: 700)));
-                  }
-                  else
-                  {
-                    print(value.data.toString());
-                    LoadingHelper.closeLoading();
-
-                    LoadingHelper.showToast("error status code is ${value.statusCode}");
-
-                  }
+            child: RaisedButton(
+              onPressed: () {
+                String phone = phone_controller.text.trim();
+                if (phone.length < 1) {
+                  LoadingHelper.showToast("enter phone number!");
+                  return;
                 }
-                LoadingHelper.closeLoading();
 
+                String pass = pass_controller.text.trim();
+                if (pass.length < 1) {
+                  LoadingHelper.showToast("enter password!");
+                  return;
+                }
 
-              })
-                  .catchError((e){
-                LoadingHelper.closeLoading();
+                final model = LoginModel(username: phone, password: pass);
 
-                print(e.toString());
-                LoadingHelper.showToast("${e.toString()}");
-              });
+                LoadingHelper.showLoading();
+                Dio()
+                    .post("http://multi-choice.org/api/Authenticate/login",
+                        data: model.toJson())
+                    .then((value) {
+                  if (value != null) {
+                    if (value.statusCode == 200) {
+                      LoginRespose res = LoginRespose.fromJson(value.data);
+                      EasyLoading.showSuccess('Great Success!');
 
+                      print(res.data.token);
+                      LoadingHelper.closeLoading();
+                      Navigator.of(context).pushReplacement(PageTransition(
+                          type: PageTransitionType.leftToRight,
+                          child: WeatherScreen(res),
+                          duration: Duration(milliseconds: 700)));
+                    } else {
+                      print(value.data.toString());
+                      LoadingHelper.closeLoading();
 
+                      LoadingHelper.showToast(
+                          "error status code is ${value.statusCode}");
+                    }
+                  }
+                  LoadingHelper.closeLoading();
+                }).catchError((e) {
+                  LoadingHelper.closeLoading();
 
-
-            }, child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text("Login", style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white
-                  , fontWeight: FontWeight.bold
-              ),),
-            ),
+                  print(e.toString());
+                  LoadingHelper.showToast("${e.toString()}");
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
               color: Colors.amber.shade600,
-
             ),
           ),
-          SizedBox(height: 60,),
-          Container(margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Don't have an account?", style: TextStyle(
-                color: Colors.white, fontSize: 20
-            ),),),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 60,
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
-            child: RaisedButton(onPressed: () {
-              Navigator.of(context)
-                  .push(PageTransition(type: PageTransitionType.topToBottom,
-                  child: SignUpScreen(),
-                  duration: Duration(milliseconds: 700)));
-            }, child: Padding(
-              padding: const EdgeInsets.all(15),
-
-              child: Text("Sign Up", style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.amber
-
-              ),),
+            child: Text(
+              "Don't have an account?",
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.of(context).push(PageTransition(
+                    type: PageTransitionType.topToBottom,
+                    child: SignUpScreen(),
+                    duration: Duration(milliseconds: 700)));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  "Sign Up",
+                  style: TextStyle(fontSize: 20, color: Colors.amber),
+                ),
+              ),
               color: Colors.black,
               shape: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.amber)
-              ),
-
+                  borderSide: BorderSide(color: Colors.amber)),
             ),
           ),
-          SizedBox(height: 40,),
-          Container(margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Or Connect With:", style: TextStyle(
-                color: Colors.white, fontSize: 20
-            ),),),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 40,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Or Connect With:",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FaIcon(FontAwesomeIcons.facebook, size: 50, color: Colors.white,),
+              FaIcon(
+                FontAwesomeIcons.facebook,
+                size: 50,
+                color: Colors.white,
+              ),
               SizedBox(width: 20),
-              FaIcon(FontAwesomeIcons.google, size: 50, color: Colors.amber,),
+              FaIcon(
+                FontAwesomeIcons.google,
+                size: 50,
+                color: Colors.amber,
+              ),
             ],
           ),
-          SizedBox(height: 20,)
-
+          SizedBox(
+            height: 20,
+          )
         ],
       ),
     );
